@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class Animail
+class Animal
 {
     /*[Attributes]*/
     int id = 0;
     String name = "";
     int category = 0;
-    //List<dynamic> contents = [];
+    String image = "";
 
     /*[Constructors]*/
-    Animail();
+    Animal();
 
     //JSON serialization
-    Animail.fromJson(Map<String, dynamic> json):
+    Animal.fromJson(Map<String, dynamic> json):
         id = json['id'],
         name = json['name'],
-        category = json['category'];
+        category = json['category'],
+        image = json['image'];
 
     Map<String, dynamic> toJson() =>
     {
         'id': id,
         'name': name,
         'category': category,
+        'image': image,
     };
 
     /*[Methods]*/
