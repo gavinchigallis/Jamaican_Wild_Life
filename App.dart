@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import './Models/ThemeAttribute.dart';
 import './Models/Utility.dart';
+import './Pages/HomePage.dart';
 
 
 class App extends StatefulWidget {
@@ -46,8 +47,8 @@ class _App extends State<App> {
     @override
     void initState(){
         
-        Future.delayed(new Duration(seconds: 2)).then((value){
-            Navigator.pushReplacementNamed(context, '/home');;
+        Future.delayed(new Duration(seconds: 1)).then((value){
+            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => HomePage()));
         });
 
         super.initState();
@@ -73,7 +74,7 @@ class _App extends State<App> {
                 ),*/
                 body: Center(
                     child: Container(
-                        color: Colors.black,
+                        //color: Colors.black,
                         width: width,
                         height: height,
                         //padding: EdgeInsets.only(left: 20.0, top: 0.0, right: 20.0, bottom: 20.0),

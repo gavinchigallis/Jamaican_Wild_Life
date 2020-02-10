@@ -114,16 +114,48 @@ class _AnimalTileWidget extends State<AnimalTileWidget> {
                 this._view = Container(
                     //color: Colors.blue,
                     //height: 450,
+                    padding: EdgeInsets.only(top: 10, bottom: 10, left: 0, right: 0),
                     width: deviceWidth,
-                    margin: EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 5),
-                    child: GestureDetector(
-                        child: Card(
-                            child: _likeButton(),
-                        ),
-                        onTap: (){
-                            //Navigator.pushNamed(context, "/product/"+widgetDataObject.product.id.toString());
-                        },
-                    )
+                    decoration: BoxDecoration(
+                      color: Colors.redAccent,
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                    ),
+                    child: Column(
+                        children: <Widget>[
+                            Image.network(
+                                this.widgetDataObject.image,
+                                //width: 100,
+                                height: deviceHeight * 0.45,
+                                fit: BoxFit.fitWidth,
+                            ),
+                            SizedBox(
+                                height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                  Container(
+                                      padding: EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 20),
+                                      height: 100,
+                                      //width: 150,
+                                      child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                              Text(this.widgetDataObject.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0, color: Colors.white)),
+                                              Text('Bird', style: TextStyle(fontWeight: FontWeight.normal, fontSize: 24.0, color: Colors.white)),
+                                          ],
+                                      ),
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.only(right: 20),
+                                      child: this._likeButton(),
+                                  )
+                              ], 
+                            )
+                        ],
+                    ),
                 );
                 break;
             }
@@ -166,7 +198,7 @@ class _AnimalTileWidget extends State<AnimalTileWidget> {
         {
             return Icon(
                 Icons.favorite_border,
-                color: Colors.black,
+                color: Colors.white,
                 size: 25,
             );
         }

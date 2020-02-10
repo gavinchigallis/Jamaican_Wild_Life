@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "category_id": 1,
+        "name": "Parrot",
+        "image": "http://dynamicevolution.technology/Apps/flutter_widgets/storage/app/public/app_assets/parrot.png"
+    },
+    {
+        "id": 2,
+        "category_id": 1,
+        "name": "Humming bird",
+        "image": "http://dynamicevolution.technology/Apps/flutter_widgets/storage/app/public/app_assets/jamaican_humming_bird.png"
+    },
+    {
+        "id": 3,
+        "category_id": 1,
+        "name": "Brown Dove",
+        "image": "http://dynamicevolution.technology/Apps/flutter_widgets/storage/app/public/app_assets/brown_dove.png"
+    },
+    {
+        "id": 4,
+        "category_id": 1,
+        "name": "Owl",
+        "image": "http://dynamicevolution.technology/Apps/flutter_widgets/storage/app/public/app_assets/owl.png"
+    }
+]

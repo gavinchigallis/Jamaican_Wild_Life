@@ -6,7 +6,7 @@ class Animal
     /*[Attributes]*/
     int id = 0;
     String name = "";
-    int category = 0;
+    int category_id = 0;
     String image = "";
 
     /*[Constructors]*/
@@ -16,14 +16,14 @@ class Animal
     Animal.fromJson(Map<String, dynamic> json):
         id = json['id'],
         name = json['name'],
-        category = json['category'],
+        category_id = json['category_id'],
         image = json['image'];
 
     Map<String, dynamic> toJson() =>
     {
         'id': id,
         'name': name,
-        'category': category,
+        'category_id': category_id,
         'image': image,
     };
 

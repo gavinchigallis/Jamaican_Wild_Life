@@ -12,7 +12,6 @@ import 'dart:math';
 import '../Models/ThemeAttribute.dart';
 import '../Models/Utility.dart';
 import '../Models/Animal.dart';
-import '../Pages/PhotoPage.dart';
 import '../Widgets/AnimalTileWidget.dart';
 import '../Services/AnimalService.dart';
 
@@ -22,12 +21,13 @@ import '../Services/AnimalService.dart';
 * @Description:
 *
 */
-class HomePage extends StatefulWidget {
+class PhotoPage extends StatefulWidget {
   /*[Attributes]*/
+  int id;
 
-  HomePage()
+  PhotoPage(int id)
   {
-
+      this.id = id;
   }
 
   /*
@@ -39,7 +39,7 @@ class HomePage extends StatefulWidget {
   */
   @override
   State<StatefulWidget> createState() {
-    return _HomePage();
+    return _PhotoPage(id);
   }
 }
 
@@ -50,7 +50,7 @@ class HomePage extends StatefulWidget {
 *
 * @return: void
 */
-class _HomePage extends State<HomePage> with WidgetsBindingObserver{
+class _PhotoPage extends State<PhotoPage> with WidgetsBindingObserver{
     /*[Attributes]*/
     int _state_id = 0;
     int mainDisplayState = 0;
@@ -60,7 +60,8 @@ class _HomePage extends State<HomePage> with WidgetsBindingObserver{
     final _scaffoldKey = GlobalKey<ScaffoldState>();
     bool _isPageLoading = false;
     AnimalService animalService = new AnimalService();
-    List _animals = [];
+    int id;
+    Animal _animal;
     
 
     /*[Constructors]*/
@@ -73,9 +74,9 @@ class _HomePage extends State<HomePage> with WidgetsBindingObserver{
     *
     * @return: void
     */
-    _HomePage()
+    _PhotoPage(id)
     {
-
+        this.id = id;
     }
 
     /*[Live Cycle methods]*/
@@ -91,7 +92,7 @@ class _HomePage extends State<HomePage> with WidgetsBindingObserver{
     void initState(){
         WidgetsBinding.instance.addObserver(this);
 
-        this._getAnimals();
+        this._getAnimal(id);
 
         super.initState();
     }
@@ -312,54 +313,6 @@ class _HomePage extends State<HomePage> with WidgetsBindingObserver{
                             child: Column(
                                 children: <Widget>[
                                     this._pageLoader(),
-                                    Container(
-                                        padding: EdgeInsets.only(left: 20, right: 20),
-                                        child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              
-                                            ],
-                                        ),
-                                    ),
-                                    Container(
-                                        height: deviceHeight-220,
-                                        child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: <Widget>[
-                                                Icon(Icons.shopping_cart, color: Colors.grey[600], size: 100),
-                                                SizedBox(height: 10),
-                                            ],
-                                        ),
-                                    ),
-                                    Container(
-                                        padding: EdgeInsets.only(left: 20, right: 20),
-                                        margin: EdgeInsets.only(top: 10, bottom: 10),
-                                        child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                                
-                                            ],
-                                        ),
-                                    ),
-                                    Container(
-                                        padding: EdgeInsets.only(left: 20, right: 20),
-                                        child: FlatButton(
-                                            color: Colors.black,
-                                            child: Container(
-                                                constraints: BoxConstraints(
-                                                    minWidth: deviceWidth-100
-                                                ),
-                                                margin: EdgeInsets.all(10),
-                                                child: Center(
-                                                    //child:,
-                                                )
-                                            ),
-                                            shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                                            onPressed: (){
-                                                
-                                            },
-                                        )
-                                    ),
                                 ],
                             ),
                         ),
@@ -380,96 +333,110 @@ class _HomePage extends State<HomePage> with WidgetsBindingObserver{
                     width: deviceWidth,
                     height: deviceHeight,
                     //color: Colors.blue,
-                    //child: SingleChildScrollView(
-                        child: Container(
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                    this._pageLoader(),
-                                    Container(
-                                        padding: EdgeInsets.only(left: 20, right: 20),
-                                        child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                                Text('Learn more', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36.0, color: Colors.black)),
-                                                Text('about Jamaican wild life', style: TextStyle(fontWeight: FontWeight.normal, fontSize: 24.0, color: Colors.black)),
-                                            ],
-                                        )
-                                    ),
-                                    Container(
-                                        padding: EdgeInsets.only(left: 25.00, top: 10.00, right: 25.00, bottom: 5.00),
-                                        constraints: BoxConstraints(
-                                            maxHeight: 70,
-                                            minHeight: 70,
-                                        ),
-                                        child: TextField(
-                                            keyboardType: TextInputType.text,
-                                            style: new TextStyle(
-                                              fontSize: 16.0,
-                                              //height: 0.35,
-                                              color: Colors.grey                  
-                                            ),
-                                            decoration: InputDecoration(
-                                                labelText: "Search",
-                                                border: OutlineInputBorder(
-                                                    borderRadius: BorderRadius.circular(10.0),
-                                                ),
-                                                //icon: Icon(Icons.search, color: Colors.grey),
-                                                prefixIcon:  Icon(Icons.search, color: Colors.grey),
-                                            ),
-                                            onSubmitted: (String value){
-                                                if(value!="")
-                                                {
-                                                    //Navigator.pushNamed(context, "/search/"+value);
-                                                }
-                                            },
-                                            onChanged: (String value) {
-                                                setState(() {
-                                                    //_passwordValue = value;
-                                                });
-                                            }
-                                        ),
-                                    ),
-                                    SizedBox(
-                                        height: 20,
-                                    ),
-                                    CarouselSlider(
-                                        height: deviceHeight - 250,
-                                        viewportFraction: 0.7,
-                                        initialPage: (this._animals.length/2).round(),
-                                        reverse: false,
-                                        enlargeCenterPage: true,
-                                        enableInfiniteScroll: false,
-                                        items: this._animals.map((animalItem) {
-
-                                            return new Builder(
-                                                builder: (BuildContext context) {
-                                                    Animal animal = new Animal.fromJson(animalItem);
-                                                    
-                                                    return GestureDetector(
-                                                        child: Container(
-                                                            margin: EdgeInsets.only(left: 10, right: 10),
-                                                            child: new AnimalTileWidget.withData(animal),
-                                                        ),
-                                                        onTap: (){
-                                                              Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute<bool>(
-                                                                    builder: (BuildContext context) => new PhotoPage(animal.id)
-                                                                )
-                                                            );
-                                                        }
-                                                    );
-                                                },
-                                            );
-                                        }).toList(),
-                                        onPageChanged: (index){},
-                                    ),
-                                ],
+                    child: Stack(
+                        children: <Widget>[
+                            Container(
+                                width: deviceWidth,
+                                height: deviceHeight,
+                                //color: Colors.red,
+                                child: Image.network(
+                                    this._animal.image,
+                                    //width: 100,
+                                    //height: deviceHeight * 0.45,
+                                    fit: BoxFit.fill
+                                ),
                             ),
-                        ),
-                    //),
+                            Positioned(
+                                left: 30,
+                                top: 30,
+                                child: GestureDetector(
+                                    child: Icon(
+                                        Icons.arrow_back_ios,
+                                        color: Colors.white,
+                                        size: 20,
+                                    ),
+                                    onTap: (){
+                                        Navigator.pop(context);
+                                    },
+                                )
+                            ),
+                            Positioned(
+                                right: 0,
+                                child: Container(
+                                    width: 60,
+                                    height: 80,
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey[300],
+                                        borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(20),
+                                        ),
+                                    ),
+                                    child: Icon(
+                                        Icons.more_vert,
+                                        color: Colors.black,
+                                        size: 20,
+                                    ), 
+                                ),
+                            ),
+                            Positioned(
+                                left: (deviceWidth/10),
+                                bottom: 40,
+                                child: Container(
+                                    width: deviceWidth * 0.8,
+                                    height: 80,
+                                    padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey[300],
+                                        borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(20),
+                                            bottomRight: Radius.circular(20),
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20)
+                                        ),
+                                    ),
+                                    child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                            ClipRRect(
+                                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                child: Image.network(
+                                                    this._animal.image,
+                                                    width: 60,
+                                                    height: 60,
+                                                    fit: BoxFit.fill,
+                                                ),
+                                            ),
+                                            Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                    Text('Bird', style: TextStyle(fontWeight: FontWeight.normal, fontSize: 12.0, color: Colors.grey)),
+                                                    SizedBox(
+                                                        height: 5,
+                                                    ),
+                                                    Text(this._animal.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Colors.black)),
+                                                ],
+                                            ),
+                                            Container(
+                                                width: 50,
+                                                height: 50,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.black,
+                                                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                                                ),
+                                                child: Icon(
+                                                    Icons.add,
+                                                    color: Colors.white,
+                                                    size: 20,
+                                                ), 
+                                            )
+                                        ],
+                                    ), 
+                                ),
+                            )  
+                        ],
+                    )
                 );
                 break;
             }
@@ -491,8 +458,8 @@ class _HomePage extends State<HomePage> with WidgetsBindingObserver{
     *
     * @return: void
     */
-    Future<void> _getAnimals() async {
-        print("START: _getAnimals");
+    Future<void> _getAnimal(id) async {
+        print("START: _getAnimal");
         //Variables
 
         setState(() {
@@ -500,17 +467,17 @@ class _HomePage extends State<HomePage> with WidgetsBindingObserver{
         });
         
         
-        this.animalService.getAnimals()
+        this.animalService.getAnimal(id)
         .then((value) {
             // Run extra code here
             utility.Custom_Print("Function Complete Successfully");
             utility.Custom_Print(value.toString());
 
             setState(() {
+                this._animal = new Animal.fromJson(value);
                 this._isPageLoading = false;
                 this._state_id = 2;
                 this.mainDisplayState = 2;
-                this._animals = value;
             });
         },
         onError: (error) {
@@ -571,7 +538,7 @@ class _HomePage extends State<HomePage> with WidgetsBindingObserver{
             });
         });
 
-        print("STOP: _getAnimals");
+        print("STOP: _getAnimal");
     }
 
 
